@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../features/primary/event_list/screen/event_list_screen.dart';
 import '../enums/app_screen.dart';
 
 import '../../features/authentication/login/screens/login_screen.dart';
@@ -9,7 +10,6 @@ import '../../features/auxiliary/profile/screens/profile_screen.dart';
 import '../../features/auxiliary/settings/screens/settings_screen.dart';
 import '../../features/primary/map/screens/map_screen.dart';
 import '../../features/primary/ngo_chat/screens/ngo_chat_screen.dart';
-import '../../features/primary/search/screen/search_screen.dart';
 
 /// Returns the widget corresponding to the given [screen].
 Widget getScreenWidget(AppScreen screen) {
