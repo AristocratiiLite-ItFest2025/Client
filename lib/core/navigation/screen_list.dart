@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../features/primary/chat_list/screens/chat_list_screen.dart';
+import '../../features/primary/event_list/screen/event_list_screen.dart';
 import '../enums/app_screen.dart';
 
 import '../../features/authentication/login/screens/login_screen.dart';
@@ -8,8 +10,6 @@ import '../../features/auxiliary/error/screens/error_screen.dart';
 import '../../features/auxiliary/profile/screens/profile_screen.dart';
 import '../../features/auxiliary/settings/screens/settings_screen.dart';
 import '../../features/primary/map/screens/map_screen.dart';
-import '../../features/primary/ngo_chat/screens/ngo_chat_screen.dart';
-import '../../features/primary/search/screen/search_screen.dart';
 
 /// Returns the widget corresponding to the given [screen].
 Widget getScreenWidget(AppScreen screen) {
@@ -22,8 +22,8 @@ Widget getScreenWidget(AppScreen screen) {
       return const SearchScreen();
     case AppScreen.map:
       return const MapScreen();
-    case AppScreen.ngoChat:
-      return const NgoChatScreen();
+    case AppScreen.chat:
+      return const ChatListScreen();
     case AppScreen.settings:
       return const SettingsScreen();
     case AppScreen.profile:
