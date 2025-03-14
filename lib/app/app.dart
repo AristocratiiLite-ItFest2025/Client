@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../core/constants/app_constants.dart';
 
 import 'theme.dart';
+import 'app_router.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstants.appName,
       theme: buildAppTheme(),
-      initialRoute: '/',
+      home: const AppRouter(),
     );
   }
 }
