@@ -1,32 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// Event model for our application.
-class Event {
-  final String? imageUrl;
-  final String organizer;
-  final String dateTime;
-  final String description;
-
-  Event({
-    this.imageUrl,
-    required this.organizer,
-    required this.dateTime,
-    required this.description,
-  });
-}
+import '../../../../core/models/event_model.dart';
 
 /// The view model for our event list.
 /// Here we use a StateNotifier to manage a list of events.
-class EventViewModel extends StateNotifier<List<Event>> {
-  EventViewModel() : super(_mockEvents);
+class EventListVM extends StateNotifier<List<Event>> {
+  EventListVM() : super(_mockEvents);
 
 // Additional methods to modify or fetch events can be added here.
 }
 
 /// Provider exposing the EventViewModel.
 final eventViewModelProvider =
-StateNotifierProvider<EventViewModel, List<Event>>((ref) {
-  return EventViewModel();
+StateNotifierProvider<EventListVM, List<Event>>((ref) {
+  return EventListVM();
 });
 
 /// Some mock events for demonstration.

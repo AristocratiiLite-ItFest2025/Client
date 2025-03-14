@@ -3,7 +3,7 @@ enum AppScreen {
   register,
   search,
   map,
-  ngoChat,
+  chat,
   settings,
   profile,
   error,
