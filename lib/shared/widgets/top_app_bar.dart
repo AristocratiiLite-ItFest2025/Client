@@ -24,7 +24,9 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
             ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.profile);
           },
           iconSize: 28.0, // Adjusting icon size
-          color: currentScreen == AppScreen.profile ? Theme.of(context).colorScheme.secondary : Colors.grey, // Adjusting color based on screen
+          color: currentScreen == AppScreen.profile
+              ? Theme.of(context).colorScheme.secondary
+              : Colors.grey, // Adjusting color based on screen
         ),
       ),
       actions: [
@@ -33,11 +35,13 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
           child: IconButton(
             icon: const Icon(Icons.settings), // Gear icon
             onPressed: () {
-              // Navigate to the settings page
-              Navigator.pushNamed(context, '/settings'); // Ensure '/settings' matches the route name
+              // Navigate to the settings page using NavigationManager
+              ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.settings);
             },
             iconSize: 28.0, // Adjusting icon size
-            color: currentScreen == AppScreen.settings ? Theme.of(context).colorScheme.secondary : Colors.grey, // Adjusting color based on screen
+            color: currentScreen == AppScreen.settings
+                ? Theme.of(context).colorScheme.secondary
+                : Colors.grey, // Adjusting color based on screen
           ),
         ),
       ],
