@@ -6,8 +6,8 @@ import '../../../../shared/widgets/top_app_bar.dart';
 import '../view_models/event_list_vm.dart';
 import '../widgets/event_card.dart';
 
-class SearchScreen extends ConsumerWidget {
-  const SearchScreen({super.key});
+class EventListScreen extends ConsumerWidget {
+  const EventListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
