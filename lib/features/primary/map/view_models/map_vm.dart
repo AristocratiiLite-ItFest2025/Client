@@ -29,9 +29,9 @@ class MapViewModel extends StateNotifier<MapState> {
   final MapService _mapService;
 
   MapViewModel(this._mapService)
-      : super(MapState(center: const LatLng(51.5, -0.09), zoom: 13.0));
+      : super(MapState(center: const LatLng(45.7489, 21.2087), zoom: 13));
 
-  /// Example method to load and update the current location.
+  /// Loads the current location and updates the map center.
   Future<void> loadCurrentLocation() async {
     final currentLocation = await _mapService.getCurrentLocation();
     state = state.copyWith(center: currentLocation);

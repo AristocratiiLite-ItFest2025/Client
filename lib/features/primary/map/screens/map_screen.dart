@@ -11,8 +11,8 @@ class MapScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Listen to map state from the view model.
     final mapState = ref.watch(mapViewModelProvider);
+    //final bool isDark = Theme.of(context).brightness == Brightness.dark;
 
     return Scaffold(
       appBar: const TopAppBar(),
@@ -25,8 +25,25 @@ class MapScreen extends ConsumerWidget {
           TileLayer(
             urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             subdomains: const ['a', 'b', 'c'],
+            // Apply a grayscale filter to each tile image.
+            tileBuilder: (context, tileWidget, tile) {
+              return ColorFiltered(
+                colorFilter: const ColorFilter.matrix([
+                  0.2126, 0.7152, 0.0722, 0, 0,
+                  0.2126, 0.7152, 0.0722, 0, 0,
+                  0.2126, 0.7152, 0.0722, 0, 0,
+                  0, 0, 0, 1, 0,
+                ]),
+                child: tileWidget,
+              );
+            },
           ),
-          // Add more layers such as MarkerLayer here.
+          IgnorePointer(
+            child: Container(
+              // Replace Colors.blue with any color you prefer.
+              color: Colors.blue.withAlpha(120),
+            ),
+          ),
         ],
       ),
       bottomNavigationBar: const BottomNavBar(),
