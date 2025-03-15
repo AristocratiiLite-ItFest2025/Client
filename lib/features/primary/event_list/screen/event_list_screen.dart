@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../../shared/widgets/top_app_bar.dart';
 import '../view_models/event_list_vm.dart';
-import '../widgets/event_card.dart';
+import '../../../../shared/widgets/event_card.dart';
 
 class EventListScreen extends ConsumerWidget {
   const EventListScreen({super.key});
@@ -23,10 +23,7 @@ class EventListScreen extends ConsumerWidget {
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
             child: EventCard(
-              imageUrl: event.imageUrl,
-              organizer: event.organizer,
-              dateTime: event.dateTime,
-              description: event.description,
+              event: event,
             ),
           );
         },

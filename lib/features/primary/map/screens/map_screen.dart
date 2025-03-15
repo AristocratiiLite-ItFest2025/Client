@@ -5,6 +5,7 @@ import 'package:flutter_map/flutter_map.dart';
 import '../view_models/map_vm.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../../shared/widgets/top_app_bar.dart';
+import '../widgets/event_marker.dart';
 
 class MapScreen extends ConsumerWidget {
   const MapScreen({super.key});
@@ -12,7 +13,7 @@ class MapScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mapState = ref.watch(mapViewModelProvider);
-    //final bool isDark = Theme.of(context).brightness == Brightness.dark;
+    final events = mapState.events;
 
     return Scaffold(
       appBar: const TopAppBar(),
@@ -20,12 +21,13 @@ class MapScreen extends ConsumerWidget {
         options: MapOptions(
           initialCenter: mapState.center,
           initialZoom: mapState.zoom,
+          // If your map supports rotation, ensure mapState.rotation is available:
+          // rotation: mapState.rotation,
         ),
         children: [
           TileLayer(
             urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
             subdomains: const ['a', 'b', 'c'],
-            // Apply a grayscale filter to each tile image.
             tileBuilder: (context, tileWidget, tile) {
               return ColorFiltered(
                 colorFilter: const ColorFilter.matrix([
@@ -40,10 +42,22 @@ class MapScreen extends ConsumerWidget {
           ),
           IgnorePointer(
             child: Container(
-              // Replace Colors.blue with any color you prefer.
               color: Colors.blue.withAlpha(120),
             ),
           ),
+          MarkerLayer(
+            markers: events.map((event) {
+              return Marker(
+                point: event.location,
+                width: 40,
+                height: 40,
+                alignment: Alignment.center,
+                child: EventMarker(
+                  event: event, // pass rotation if applicable
+                ),
+              );
+            }).toList(),
+          )
         ],
       ),
       bottomNavigationBar: const BottomNavBar(),
