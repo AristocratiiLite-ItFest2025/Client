@@ -54,7 +54,6 @@ class EventDetailDialog extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 8),
-            // Attendees and Recurring Duration
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
