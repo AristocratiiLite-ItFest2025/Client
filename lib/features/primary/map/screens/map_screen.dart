@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../view_models/map_vm.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
@@ -48,7 +49,7 @@ class MapScreen extends ConsumerWidget {
           MarkerLayer(
             markers: events.map((event) {
               return Marker(
-                point: event.location,
+                point: LatLng(event.lat,event.lon),
                 width: 40,
                 height: 40,
                 alignment: Alignment.center,
