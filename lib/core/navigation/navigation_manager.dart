@@ -10,7 +10,7 @@ StateNotifierProvider<NavigationManager, AppScreen>(
 
 /// NavigationManager handles the current screen state.
 class NavigationManager extends StateNotifier<AppScreen> {
-  NavigationManager() : super(AppScreen.map); //Todo: Change to login
+  NavigationManager() : super(AppScreen.login); //Todo: Change to login
 
   /// Change the current screen.
   void navigateTo(AppScreen screen) {
