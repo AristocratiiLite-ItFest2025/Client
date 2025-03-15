@@ -23,7 +23,7 @@ COPY . /app/
 WORKDIR /app/
 
 # Build the Flutter web application
-RUN flutter build web
+RUN flutter run -d chrome
 
 FROM nginx:1.21.1-alpine
 COPY --from=build-env /app/build/web /usr/share/nginx/html
