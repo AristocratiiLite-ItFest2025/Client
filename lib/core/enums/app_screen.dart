@@ -3,6 +3,7 @@ enum AppScreen {
   register,
   search,
   map,
+  chatList,
   chat,
   settings,
   profile,

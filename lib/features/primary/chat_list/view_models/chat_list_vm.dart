@@ -4,7 +4,7 @@ import '../../../../core/models/chat_model.dart';
 
 /// ViewModel for a single chat_list card.
 /// This class extends StateNotifier to manage the state of a Chat instance.
-class ChatCardViewModel extends StateNotifier<Chat> {
+class ChatCardViewModel extends StateNotifier<ChatModel> {
   ChatCardViewModel(super.chat);
 
 // In a real-world scenario, you can add methods here to update the chat_list state.
@@ -12,39 +12,44 @@ class ChatCardViewModel extends StateNotifier<Chat> {
 
 /// Provider for a single ChatCardViewModel using a family to pass a specific Chat.
 final chatCardProvider =
-StateNotifierProvider.family<ChatCardViewModel, Chat, Chat>(
+StateNotifierProvider.family<ChatCardViewModel, ChatModel, ChatModel>(
       (ref, chat) => ChatCardViewModel(chat),
 );
 
 /// ViewModel for a list of chats containing mockup data.
-class ChatListViewModel extends StateNotifier<List<Chat>> {
+class ChatListViewModel extends StateNotifier<List<ChatModel>> {
   ChatListViewModel() : super(_mockChats);
 
   // Mockup data for demonstration.
-  static List<Chat> get _mockChats => [
-    Chat(
+  static List<ChatModel> get _mockChats => [
+    ChatModel(
+      id: 1,
       title: 'General Chat',
-      lastMessage: 'Hey there! How are you?',
-      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 5)),
+      lastMessage: 'Sounds like a plan. Enjoy your day!',
+      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 38)),
       imageUrl: null,
     ),
-    Chat(
-      title: 'Flutter Devs',
-      lastMessage: 'Check out the new Flutter update!',
-      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 15)),
+    ChatModel(
+      id: 2,
+      title: 'Meeting Chat',
+      lastMessage: 'Will do, thanks!',
+      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 23)),
       imageUrl: null,
     ),
-    Chat(
+    ChatModel(
+      id: 3,
       title: 'Riverpod Chat',
-      lastMessage: 'Riverpod is awesome for state management.',
-      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 25)),
+      lastMessage: 'Great, see you then.',
+      lastMessageTimestamp: DateTime.now().subtract(const Duration(minutes: 12)),
       imageUrl: null,
     ),
   ];
 }
 
+
+
 /// Provider for the chat_list list.
 final chatListProvider =
-StateNotifierProvider<ChatListViewModel, List<Chat>>(
+StateNotifierProvider<ChatListViewModel, List<ChatModel>>(
       (ref) => ChatListViewModel(),
 );
