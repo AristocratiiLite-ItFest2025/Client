@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../core/models/event_model.dart';
+import '../../../core/models/event_model.dart';
 import 'event_detail_dialog.dart';
 
-class EventEntryCard extends StatelessWidget {
+class EventCard extends StatelessWidget {
   final EventModel event;
 
-  const EventEntryCard({super.key, required this.event});
+  const EventCard({super.key, required this.event});
 
   String _formatTime(DateTime dateTime) {
     return DateFormat('HH:mm, dd MMM yyyy').format(dateTime);
@@ -34,15 +34,24 @@ class EventEntryCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Image section
+              // Image section
               Container(
                 height: 80,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.vertical(
-                      top: Radius.circular(12)),
-                  image: DecorationImage(
+                  borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                  gradient: event.image == "Null"
+                      ? const LinearGradient(
+                    colors: [Colors.blue, Colors.green],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  )
+                      : null,
+                  image: event.image != "Null"
+                      ? DecorationImage(
                     image: NetworkImage(event.image),
                     fit: BoxFit.cover,
-                  ),
+                  )
+                      : null,
                 ),
               ),
               Padding(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../../../core/models/event_model.dart';
+import '../../../core/models/event_model.dart';
 
 class EventDetailDialog extends StatelessWidget {
   final EventModel event;
