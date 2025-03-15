@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
+import 'package:help_now_frontend/features/primary/map/widgets/event_entry_card.dart';
 import '../../../../core/models/event_model.dart';
-import '../../../../shared/widgets/event_card.dart';
 
 class EventMarker extends StatelessWidget {
-  final Event event;
+  final EventModel event;
 
   const EventMarker({super.key, required this.event});
 
@@ -18,7 +17,8 @@ class EventMarker extends StatelessWidget {
         showGeneralDialog(
           context: context,
           barrierDismissible: true,
-          barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+          barrierLabel: MaterialLocalizations.of(context)
+              .modalBarrierDismissLabel,
           barrierColor: Colors.black54,
           transitionDuration: const Duration(milliseconds: 300),
           pageBuilder: (context, animation, secondaryAnimation) {
@@ -29,7 +29,7 @@ class EventMarker extends StatelessWidget {
                   top: markerPosition.dy - 150,
                   child: Material(
                     color: Colors.transparent,
-                    child: EventCard(event: event),
+                    child: EventEntryCard(event: event),
                   ),
                 ),
               ],
@@ -47,14 +47,19 @@ class EventMarker extends StatelessWidget {
         width: 50,
         height: 50,
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
           shape: BoxShape.circle,
+          color: Theme.of(context).colorScheme.primary,
         ),
-        child: Center(
-          child: Icon(
-            Icons.event,
-            color: Theme.of(context).colorScheme.onPrimary,
-            size: 30,
+        child: ClipOval(
+          child: Image.network(
+            event.iconImage,
+            fit: BoxFit.cover,
+            // Fallback in case the image fails to load
+            errorBuilder: (context, error, stackTrace) => Icon(
+              Icons.event,
+              color: Theme.of(context).colorScheme.onPrimary,
+              size: 30,
+            ),
           ),
         ),
       ),
