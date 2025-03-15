@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:help_now_frontend/shared/widgets/event_card/event_entry_card.dart';
 
 import '../../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../../shared/widgets/top_app_bar.dart';
 import '../view_models/event_list_vm.dart';
-import '../../../../shared/widgets/event_card.dart';
 
 class EventListScreen extends ConsumerWidget {
   const EventListScreen({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:help_now_frontend/features/primary/map/widgets/event_entry_card.dart';
+import 'package:help_now_frontend/shared/widgets/event_card/event_entry_card.dart';
 import '../../../../core/models/event_model.dart';
 
 class EventMarker extends StatelessWidget {
@@ -29,7 +29,7 @@ class EventMarker extends StatelessWidget {
                   top: markerPosition.dy - 150,
                   child: Material(
                     color: Colors.transparent,
-                    child: EventEntryCard(event: event),
+                    child: EventCard(event: event),
                   ),
                 ),
               ],
