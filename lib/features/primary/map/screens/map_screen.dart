@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../../shared/widgets/web_top_bar.dart';
 import '../view_models/map_vm.dart';
 import '../../../../shared/widgets/bottom_nav_bar.dart';
 import '../../../../shared/widgets/top_app_bar.dart';
@@ -17,13 +19,11 @@ class MapScreen extends ConsumerWidget {
     final events = mapState.events;
 
     return Scaffold(
-      appBar: const TopAppBar(),
+      appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
       body: FlutterMap(
         options: MapOptions(
           initialCenter: mapState.center,
           initialZoom: mapState.zoom,
-          // If your map supports rotation, ensure mapState.rotation is available:
-          // rotation: mapState.rotation,
         ),
         children: [
           TileLayer(
@@ -49,19 +49,17 @@ class MapScreen extends ConsumerWidget {
           MarkerLayer(
             markers: events.map((event) {
               return Marker(
-                point: LatLng(event.lat,event.lon),
+                point: LatLng(event.lat, event.lon),
                 width: 40,
                 height: 40,
                 alignment: Alignment.center,
-                child: EventMarker(
-                  event: event, // pass rotation if applicable
-                ),
+                child: EventMarker(event: event),
               );
             }).toList(),
           )
         ],
       ),
-      bottomNavigationBar: const BottomNavBar(),
+      bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
     );
   }
 }
