@@ -23,10 +23,20 @@ class EventDetailDialog extends StatelessWidget {
             Container(
               height: 150,
               decoration: BoxDecoration(
-                image: DecorationImage(
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
+                gradient: event.image == "Null"
+                    ? const LinearGradient(
+                  colors: [Colors.blue, Colors.green],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+                    : null,
+                image: event.image != "Null"
+                    ? DecorationImage(
                   image: NetworkImage(event.image),
                   fit: BoxFit.cover,
-                ),
+                )
+                      : null,
               ),
             ),
             const SizedBox(height: 8),

@@ -33,8 +33,6 @@ class EventCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Image section
-              // Image section
               Container(
                 height: 80,
                 decoration: BoxDecoration(
