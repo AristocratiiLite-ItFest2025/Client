@@ -18,16 +18,23 @@ class EventListScreen extends ConsumerWidget {
       appBar: kIsWeb
           ? const WebTopBar() // Use WebTopBar for web
           : const TopAppBar(), // Use TopAppBar for mobile
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: events.length,
-        itemBuilder: (context, index) {
-          final event = events[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: EventCard(event: event), // EventCard widget to display events
-          );
-        },
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 600, // Adjust max width as needed
+          ),
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            itemCount: events.length,
+            itemBuilder: (context, index) {
+              final event = events[index];
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: EventCard(event: event), // EventCard widget to display events
+              );
+            },
+          ),
+        ),
       ),
       bottomNavigationBar: kIsWeb
           ? null // Hide BottomNavBar for web
@@ -35,3 +42,4 @@ class EventListScreen extends ConsumerWidget {
     );
   }
 }
+

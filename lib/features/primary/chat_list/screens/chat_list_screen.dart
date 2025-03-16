@@ -18,15 +18,26 @@ class ChatListScreen extends ConsumerWidget {
       appBar: kIsWeb
           ? const WebTopBar() // Web-specific top bar
           : const TopAppBar(), // Mobile-specific top bar
-      body: ListView.builder(
-        itemCount: chatList.length,
-        itemBuilder: (context, index) {
-          return ChatCard(chat: chatList[index]); // Use ChatCard widget for displaying each chat
-        },
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            maxWidth: 600, // Adjust width as needed
+          ),
+          child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+            itemCount: chatList.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: ChatCard(chat: chatList[index]), // Chat card with spacing
+              );
+            },
+          ),
+        ),
       ),
       bottomNavigationBar: kIsWeb
           ? null // No bottom nav bar for web
-          : BottomNavBar(), // Bottom nav bar for mobile
+          : const BottomNavBar(), // Bottom nav bar for mobile
     );
   }
 }

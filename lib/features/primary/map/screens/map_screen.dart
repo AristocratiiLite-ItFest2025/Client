@@ -29,9 +29,9 @@ class MapScreen extends ConsumerWidget {
     return Scaffold(
       appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
       body: FlutterMap(
-        mapController: mapController,
         options: MapOptions(
-          // No center or zoom defined here
+          initialCenter: mapState.center,
+          initialZoom: mapState.zoom,
         ),
         children: [
           TileLayer(
@@ -64,7 +64,7 @@ class MapScreen extends ConsumerWidget {
                 child: EventMarker(event: event),
               );
             }).toList(),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
