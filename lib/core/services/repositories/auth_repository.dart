@@ -1,3 +1,4 @@
+import '../../models/profile_model.dart';
 import '../authetication_service.dart';
 
 class AuthRepository {
@@ -7,7 +8,7 @@ class AuthRepository {
     await _authService.register(username, email, password);
   }
 
-  Future<void> login(String username, String password) async {
-    await _authService.login(username, password);
+  Future<ProfileModel> login(String username, String password) async {
+    return await _authService.login(username, password);
   }
 }
