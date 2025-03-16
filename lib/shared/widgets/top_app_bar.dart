@@ -29,7 +29,6 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          // Update the navigation state to go back (e.g. to ChatList)
           ref
               .read(navigationManagerProvider.notifier)
               .navigateTo(AppScreen.chatList);
