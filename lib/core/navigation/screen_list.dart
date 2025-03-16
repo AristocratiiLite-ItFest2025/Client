@@ -11,10 +11,11 @@ import '../../features/primary/map/screens/map_screen.dart';
 import '../../features/primary/chat/screens/entry_list_screen.dart';
 
 import '../enums/app_screen.dart';
+import 'navigation_manager.dart';
 
 /// Returns the widget corresponding to the given [screen].
-Widget getScreenWidget(AppScreen screen) {
-  switch (screen) {
+Widget getScreenWidget(NavigationState navState) {
+  switch (navState.screen) {
     case AppScreen.login:
       return const LoginScreen();
     case AppScreen.register:
@@ -26,7 +27,9 @@ Widget getScreenWidget(AppScreen screen) {
     case AppScreen.chatList:
       return const ChatListScreen();
     case AppScreen.entryList:
-      return const EntryListScreen(chatId: 1);
+    // Retrieve the chat id passed in the navigation state.
+      final chatId = navState.arguments as int?;
+      return EntryListScreen(chatId: chatId ?? 1);
     case AppScreen.settings:
       return const SettingsScreen();
     case AppScreen.profile:
@@ -35,3 +38,4 @@ Widget getScreenWidget(AppScreen screen) {
       return const ErrorScreen();
   }
 }
+

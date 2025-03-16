@@ -17,7 +17,9 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentScreen = ref.watch(navigationManagerProvider);
+    // Now we get the NavigationState.
+    final navState = ref.watch(navigationManagerProvider);
+    final currentScreen = navState.screen;
     final bool showBackButton = _shouldShowBackButton(currentScreen);
 
     return AppBar(

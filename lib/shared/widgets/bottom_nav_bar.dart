@@ -9,8 +9,7 @@ class BottomNavBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
-    final currentScreen = ref.watch(navigationManagerProvider);
+    final navState = ref.watch(navigationManagerProvider);
     final navigationManager = ref.read(navigationManagerProvider.notifier);
 
     return BottomAppBar(
@@ -22,7 +21,7 @@ class BottomNavBar extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.search),
             onPressed: () => navigationManager.navigateTo(AppScreen.search),
-            color: currentScreen == AppScreen.search
+            color: navState.screen == AppScreen.search
                 ? Theme.of(context).colorScheme.secondary
                 : Theme.of(context).colorScheme.secondaryContainer,
           ),
@@ -30,7 +29,7 @@ class BottomNavBar extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.map),
             onPressed: () => navigationManager.navigateTo(AppScreen.map),
-            color: currentScreen == AppScreen.map
+            color: navState.screen == AppScreen.map
                 ? Theme.of(context).colorScheme.secondary
                 : Theme.of(context).colorScheme.secondaryContainer,
           ),
@@ -38,7 +37,7 @@ class BottomNavBar extends ConsumerWidget {
           IconButton(
             icon: const Icon(Icons.chat),
             onPressed: () => navigationManager.navigateTo(AppScreen.chatList),
-            color: currentScreen == AppScreen.chatList
+            color: navState.screen == AppScreen.chatList
                 ? Theme.of(context).colorScheme.secondary
                 : Theme.of(context).colorScheme.secondaryContainer,
           ),

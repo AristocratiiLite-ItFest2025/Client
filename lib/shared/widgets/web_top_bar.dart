@@ -10,7 +10,8 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final currentScreen = ref.watch(navigationManagerProvider);
+    final navState = ref.watch(navigationManagerProvider);
+    final currentScreen = navState.screen;
     return AppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -36,19 +37,25 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
                 label: "Search",
                 icon: Icons.search,
                 isSelected: currentScreen == AppScreen.search,
-                onTap: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.search),
+                onTap: () => ref
+                    .read(navigationManagerProvider.notifier)
+                    .navigateTo(AppScreen.search),
               ),
               _NavLink(
                 label: "Map",
                 icon: Icons.map,
                 isSelected: currentScreen == AppScreen.map,
-                onTap: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.map),
+                onTap: () => ref
+                    .read(navigationManagerProvider.notifier)
+                    .navigateTo(AppScreen.map),
               ),
               _NavLink(
                 label: "Chats",
                 icon: Icons.chat,
                 isSelected: currentScreen == AppScreen.chatList,
-                onTap: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.chatList),
+                onTap: () => ref
+                    .read(navigationManagerProvider.notifier)
+                    .navigateTo(AppScreen.chatList),
               ),
             ],
           ),
@@ -57,7 +64,9 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.account_circle),
-                onPressed: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.profile),
+                onPressed: () => ref
+                    .read(navigationManagerProvider.notifier)
+                    .navigateTo(AppScreen.profile),
                 iconSize: 28.0,
                 color: currentScreen == AppScreen.profile
                     ? Theme.of(context).colorScheme.secondary
@@ -65,7 +74,9 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
               ),
               IconButton(
                 icon: const Icon(Icons.settings),
-                onPressed: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.settings),
+                onPressed: () => ref
+                    .read(navigationManagerProvider.notifier)
+                    .navigateTo(AppScreen.settings),
                 iconSize: 28.0,
                 color: currentScreen == AppScreen.settings
                     ? Theme.of(context).colorScheme.secondary
@@ -98,7 +109,8 @@ class _NavLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? Theme.of(context).colorScheme.secondary : Colors.grey;
+    final color =
+    isSelected ? Theme.of(context).colorScheme.secondary : Colors.grey;
     return TextButton.icon(
       onPressed: onTap,
       icon: Icon(icon, color: color),
@@ -109,4 +121,3 @@ class _NavLink extends StatelessWidget {
     );
   }
 }
-

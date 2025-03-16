@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/enums/app_screen.dart';
 import '../../../../core/models/chat_model.dart';
 import '../../../../core/navigation/navigation_manager.dart';
-import '../../chat/screens/entry_list_screen.dart';
 
 class ChatCard extends ConsumerWidget {
   final ChatModel chat;
@@ -23,13 +22,8 @@ class ChatCard extends ConsumerWidget {
 
     return InkWell(
       onTap: () {
-        ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.entryList);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EntryListScreen(chatId: chat.id),
-          ),
-        );
+        ref.read(navigationManagerProvider.notifier)
+            .navigateTo(AppScreen.entryList, arguments: chat.id);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
