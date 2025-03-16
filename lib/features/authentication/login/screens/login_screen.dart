@@ -37,43 +37,51 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final loginState = ref.watch(loginViewModelProvider);
     return Scaffold(
       appBar: AppBar(title: const Text("Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            // Email field
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Username'),
-            ),
-            // Password field
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: 'Password'),
-              obscureText: true,
-            ),
-            const SizedBox(height: 20),
-            // Login button or loading indicator
-            loginState.isLoading
-                ? const CircularProgressIndicator()
-                : ElevatedButton(
-                onPressed: _onLogin, child: const Text("Login")),
-            // Display error message if any
-            if (loginState.errorMessage != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(
-                  loginState.errorMessage!,
-                  style: const TextStyle(color: Colors.red),
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Email field
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: 'Username'),
                 ),
-              ),
-            const SizedBox(height: 20),
-            // Button to navigate to register screen
-            TextButton(
-              onPressed: _navigateToRegister,
-              child: const Text("Don't have an account? Register here."),
+                // Password field
+                TextField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: 'Password'),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 20),
+                // Login button or loading indicator
+                loginState.isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                  onPressed: _onLogin,
+                  child: const Text("Login"),
+                ),
+                // Display error message if any
+                if (loginState.errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      loginState.errorMessage!,
+                      style: const TextStyle(color: Colors.red),
+                    ),
+                  ),
+                const SizedBox(height: 20),
+                // Button to navigate to register screen
+                TextButton(
+                  onPressed: _navigateToRegister,
+                  child: const Text("Don't have an account? Register here."),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
