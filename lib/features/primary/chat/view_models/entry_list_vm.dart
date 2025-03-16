@@ -8,7 +8,7 @@ import 'package:help_now_frontend/core/services/socket_service.dart';
 class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
   final EntryService _entryService;
   final int chatId;
-  final int _currentUserId; // Stored privately.
+  final int _currentUserId;
   final SocketService _socketService = SocketService();
 
   EntryListViewModel({
@@ -21,11 +21,10 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
     _init();
   }
 
-  // Getter for the current user id.
   int get currentUserId => _currentUserId;
 
   void _init() {
-    _socketService.joinChat(chatId);
+    _socketService.joinChat(chatId,currentUserId);
     _socketService.listenForMessages(_handleIncomingMessage);
     fetchEntries();
   }
@@ -41,30 +40,19 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
 
   Future<void> sendMessage(String text) async {
     try {
-      final newEntry = EntryModel(
-        text: text,
-        userId: currentUserId,
-        chatId: chatId,
-        timestamp: DateTime.now(),
-        id: 0,
-      );
-      _socketService.sendMessage(newEntry.toJson());
-      state.whenData((entries) {
-        state = AsyncValue.data([newEntry, ...entries]);
-      });
+      _socketService.sendMessage(text,chatId,currentUserId);
+
+      // Do not update the state immediately; wait for the backend to broadcast
+      // the new entry via the socket event listener.
     } catch (e, st) {
       state = AsyncValue.error(e, st);
     }
   }
 
-  /// Determines if the given entry belongs to the current user.
-  bool isEntryMine(EntryModel entry) {
-    return entry.userId == currentUserId;
-  }
-
   void _handleIncomingMessage(dynamic data) {
     try {
       final decodedData = data is String ? json.decode(data) : data;
+      debugPrint(decodedData.toString());
       final incomingEntry = EntryModel.fromJson(decodedData);
       state.whenData((entries) {
         state = AsyncValue.data([incomingEntry, ...entries]);
@@ -74,9 +62,10 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
     }
   }
 
+
   @override
   void dispose() {
-    _socketService.leaveChat(chatId);
+    _socketService.leaveChat(chatId,currentUserId);
     super.dispose();
   }
 }

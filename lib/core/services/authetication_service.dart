@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import '../models/profile_model.dart';
@@ -23,7 +22,6 @@ class AuthenticationService {
     }
 
     final responseData = jsonDecode(response.body);
-    debugPrint(responseData.toString());
     return ProfileModel.fromJson(responseData);
   }
 

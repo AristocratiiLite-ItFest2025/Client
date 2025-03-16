@@ -52,9 +52,8 @@ class EventMarker extends StatelessWidget {
         ),
         child: ClipOval(
           child: Image.network(
-            event.iconImage,
+            event.iconImage!,
             fit: BoxFit.cover,
-            // Fallback in case the image fails to load
             errorBuilder: (context, error, stackTrace) => Icon(
               Icons.event,
               color: Theme.of(context).colorScheme.onPrimary,
