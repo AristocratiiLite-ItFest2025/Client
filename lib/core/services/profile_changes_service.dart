@@ -20,17 +20,21 @@ class ProfileChangesService {
 
     final url = Uri.parse('$baseUrl/users/$userId/update-verification');
 
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode({'isVerified': isVerified}),
-    );
+    try {
+      final response = await http.post(
+        url,
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'isVerified': isVerified}),
+      );
 
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      final Map<String, dynamic> error = jsonDecode(response.body);
-      throw Exception('Error: ${error['error']}');
+      if (response.statusCode == 200) {
+        return jsonDecode(response.body);
+      } else {
+        final Map<String, dynamic> error = jsonDecode(response.body);
+        throw Exception('Error: ${error['error']}');
+      }
+    } catch (e) {
+      throw Exception('Network or server error: $e');
     }
   }
 }
