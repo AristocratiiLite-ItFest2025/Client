@@ -10,38 +10,44 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScreen = ref.watch(navigationManagerProvider);
+    final theme = Theme.of(context).colorScheme; // Fetch theme colors
 
     return AppBar(
-      title: Text(_getScreenTitle(currentScreen)),
+      backgroundColor: theme.primary, // Set app bar color
+      title: Text(
+        _getScreenTitle(currentScreen),
+        style: TextStyle(
+          color: theme.onPrimary, // Text color based on theme
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       centerTitle: true,
       elevation: 4.0,
       leading: Padding(
-        padding: const EdgeInsets.only(left: 16.0), // Adjusting padding for the left icon
+        padding: const EdgeInsets.only(left: 16.0), // Adjust padding
         child: IconButton(
-          icon: const Icon(Icons.account_circle), // Account icon
+          icon: const Icon(Icons.account_circle),
           onPressed: () {
-            // Navigate to the account management page
             ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.profile);
           },
-          iconSize: 28.0, // Adjusting icon size
+          iconSize: 28.0,
           color: currentScreen == AppScreen.profile
-              ? Theme.of(context).colorScheme.secondary
-              : Colors.grey, // Adjusting color based on screen
+              ? theme.secondary // Highlight active icon
+              : theme.onPrimary.withAlpha(153), // Dim inactive icon
         ),
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(right: 16.0), // Adjusting padding for the right icon
+          padding: const EdgeInsets.only(right: 16.0), // Adjust padding
           child: IconButton(
-            icon: const Icon(Icons.settings), // Gear icon
+            icon: const Icon(Icons.settings),
             onPressed: () {
-              // Navigate to the settings page using NavigationManager
               ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.settings);
             },
-            iconSize: 28.0, // Adjusting icon size
+            iconSize: 28.0,
             color: currentScreen == AppScreen.settings
-                ? Theme.of(context).colorScheme.secondary
-                : Colors.grey, // Adjusting color based on screen
+                ? theme.secondary // Highlight active icon
+                : theme.onPrimary.withAlpha(153), // Dim inactive icon
           ),
         ),
       ],

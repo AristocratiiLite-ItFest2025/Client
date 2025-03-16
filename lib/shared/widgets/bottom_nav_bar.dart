@@ -9,11 +9,12 @@ class BottomNavBar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final currentScreen = ref.watch(navigationManagerProvider);
     final navigationManager = ref.read(navigationManagerProvider.notifier);
+    final theme = Theme.of(context).colorScheme; // Fetch theme colors
 
     return BottomAppBar(
+      color: theme.primaryContainer, // Themed background color
       elevation: 8.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -23,24 +24,24 @@ class BottomNavBar extends ConsumerWidget {
             icon: const Icon(Icons.search),
             onPressed: () => navigationManager.navigateTo(AppScreen.search),
             color: currentScreen == AppScreen.search
-                ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                ? theme.secondary // Highlight active icon
+                : theme.onPrimaryContainer.withAlpha(153), // Dim inactive icon
           ),
           // Center button: Map screen.
           IconButton(
             icon: const Icon(Icons.map),
             onPressed: () => navigationManager.navigateTo(AppScreen.map),
             color: currentScreen == AppScreen.map
-                ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                ? theme.secondary
+                : theme.onPrimaryContainer.withAlpha(153),
           ),
           // Right button: NGO Chat screen.
           IconButton(
             icon: const Icon(Icons.chat),
             onPressed: () => navigationManager.navigateTo(AppScreen.ngoChat),
             color: currentScreen == AppScreen.ngoChat
-                ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                ? theme.secondary
+                : theme.onPrimaryContainer.withAlpha(153),
           ),
         ],
       ),
