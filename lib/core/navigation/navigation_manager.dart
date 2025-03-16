@@ -10,10 +10,23 @@ StateNotifierProvider<NavigationManager, AppScreen>(
 
 /// NavigationManager handles the current screen state.
 class NavigationManager extends StateNotifier<AppScreen> {
-  NavigationManager() : super(AppScreen.login); //Todo: Change to login
+  // Stack to store navigation history.
+  final List<AppScreen> _screenHistory = [];
 
-  /// Change the current screen.
+  NavigationManager() : super(AppScreen.login);
+
+  /// Navigates to a new screen while saving the current screen in history.
   void navigateTo(AppScreen screen) {
+    _screenHistory.add(state);
     state = screen;
+  }
+
+  /// Navigates back to the previous screen if available.
+  void navigateBack() {
+    if (_screenHistory.isNotEmpty) {
+      state = _screenHistory.removeLast();
+    } else {
+      state = AppScreen.map;
+    }
   }
 }

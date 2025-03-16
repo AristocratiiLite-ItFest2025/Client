@@ -16,7 +16,7 @@ class EntryBubble extends ConsumerWidget {
 
     return prefsAsync.when(
       data: (prefs) {
-        final myUserId = prefs.userId ?? 0;
+        final myUserId = prefs.profile?.id ?? 0;
         final isMine = isEntryMine(entry, myUserId);
 
         return Align(

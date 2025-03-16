@@ -7,11 +7,12 @@ import '../services/preferences_service.dart';
 
 final entryListProvider = StateNotifierProvider.family<
     EntryListViewModel, AsyncValue<List<EntryModel>>, int>((ref, chatId) {
-  final prefsAsync = ref.watch(preferencesServiceProvider);
-  int currentUserId = 0;
-  prefsAsync.whenData((prefs) {
-    currentUserId = prefs.userId ?? 0;
-  });
+
+  final currentUserId = ref.watch(preferencesServiceProvider).maybeWhen(
+    data: (prefs) => prefs.profile?.id ?? 0,
+    orElse: () => 0,
+  );
+
   final entryService = ref.read(entryServiceProvider);
   return EntryListViewModel(
     entryService: entryService,

@@ -13,13 +13,14 @@ class ChatListScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final chatListAsync = ref.watch(chatListProvider);
+    final chatListVM = ref.watch(chatListProvider.notifier);
 
     return Scaffold(
       appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
       body: chatListAsync.when(
         data: (chats) => ListView.builder(
           itemCount: chats.length,
-          itemBuilder: (context, index) => ChatCard(chat: chats[index]),
+          itemBuilder: (context, index) => ChatCard(chat: chats[index], userid: chatListVM.userId,),
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),

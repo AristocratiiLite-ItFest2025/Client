@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:help_now_frontend/core/models/entry_model.dart';
@@ -9,17 +8,21 @@ import 'package:help_now_frontend/core/services/socket_service.dart';
 class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
   final EntryService _entryService;
   final int chatId;
-  final int currentUserId;
+  final int _currentUserId; // Stored privately.
   final SocketService _socketService = SocketService();
 
   EntryListViewModel({
     required EntryService entryService,
     required this.chatId,
-    required this.currentUserId,
-  })  : _entryService = entryService,
+    required int currentUserId,
+  })  : _currentUserId = currentUserId,
+        _entryService = entryService,
         super(const AsyncValue.data([])) {
     _init();
   }
+
+  // Getter for the current user id.
+  int get currentUserId => _currentUserId;
 
   void _init() {
     _socketService.joinChat(chatId);

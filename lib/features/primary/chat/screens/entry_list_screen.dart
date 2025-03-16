@@ -8,12 +8,10 @@ import '../widgets/entry_bubble.dart';
 
 class EntryListScreen extends ConsumerWidget {
   final int chatId;
-  final int currentUserId;
 
   const EntryListScreen({
     super.key,
     required this.chatId,
-    required this.currentUserId,
   });
 
   @override

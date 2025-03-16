@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/enums/app_screen.dart';
 import '../../../../core/models/chat_model.dart';
+import '../../../../core/navigation/navigation_manager.dart';
 import '../../chat/screens/entry_list_screen.dart';
 
 class ChatCard extends ConsumerWidget {
   final ChatModel chat;
-  ChatCard({super.key, required this.chat});
+  final int userid;
+  ChatCard({super.key, required this.chat, required this.userid});
 
   final chatCardProvider = Provider.family<ChatModel, ChatModel>(
         (ref, chat) {
@@ -20,11 +23,11 @@ class ChatCard extends ConsumerWidget {
 
     return InkWell(
       onTap: () {
-        // Navigate to the ChatScreen, passing the selected chat's id.
+        ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.entryList);
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EntryListScreen(chatId: chat.id, currentUserId: chat.id,),
+            builder: (context) => EntryListScreen(chatId: chat.id),
           ),
         );
       },

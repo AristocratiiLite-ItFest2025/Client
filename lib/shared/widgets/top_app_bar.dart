@@ -29,9 +29,7 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
           ? IconButton(
         icon: const Icon(Icons.arrow_back),
         onPressed: () {
-          ref
-              .read(navigationManagerProvider.notifier)
-              .navigateTo(AppScreen.chatList);
+          ref.read(navigationManagerProvider.notifier).navigateBack();
         },
       )
           : Padding(

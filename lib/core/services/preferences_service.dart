@@ -14,33 +14,22 @@ class PreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  String? get username => _prefs?.getString('username');
-  Future<bool> setUsername(String username) async {
-    if (_prefs == null) await init();
-    return _prefs!.setString('username', username);
-  }
-
-  int? get userId => _prefs?.getInt('user_id');
-  Future<bool> setUserId(int id) async {
-    if (_prefs == null) await init();
-    return _prefs!.setInt('user_id', id);
-  }
-
-  // New methods to save and retrieve the complete profile.
+  // Save the complete profile as a JSON string.
   Future<bool> setProfile(ProfileModel profile) async {
     if (_prefs == null) await init();
     final jsonString = jsonEncode(profile.toJson());
     return _prefs!.setString('profile', jsonString);
   }
 
+  // Retrieve the complete profile.
   ProfileModel? get profile {
     final jsonString = _prefs?.getString('profile');
     if (jsonString == null) return null;
     return ProfileModel.fromJson(jsonDecode(jsonString));
   }
 }
-
-final preferencesServiceProvider = FutureProvider<PreferencesService>((ref) async {
+final preferencesServiceProvider =
+FutureProvider<PreferencesService>((ref) async {
   final service = PreferencesService();
   await service.init();
   return service;

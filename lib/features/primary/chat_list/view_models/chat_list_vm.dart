@@ -15,6 +15,8 @@ class ChatListViewModel extends StateNotifier<AsyncValue<List<ChatModel>>> {
     fetchChats();
   }
 
+  int get userId => _userId;
+
   Future<void> fetchChats() async {
     try {
       final chats = await _chatService.fetchChats(_userId);
@@ -24,6 +26,7 @@ class ChatListViewModel extends StateNotifier<AsyncValue<List<ChatModel>>> {
     }
   }
 }
+
 
 final chatListProvider = StateNotifierProvider<ChatListViewModel, AsyncValue<List<ChatModel>>>((ref) {
   final chatService = ref.read(chatServiceProvider);
