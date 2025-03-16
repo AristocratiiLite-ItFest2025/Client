@@ -59,7 +59,7 @@ class ChatCard extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            chatData.lastMessage!,
+                            "hi",
                             style: Theme.of(context).textTheme.bodyMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
