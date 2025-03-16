@@ -44,7 +44,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             // Email field
             TextField(
               controller: _emailController,
-              decoration: const InputDecoration(labelText: 'Email'),
+              decoration: const InputDecoration(labelText: 'Username'),
             ),
             // Password field
             TextField(
