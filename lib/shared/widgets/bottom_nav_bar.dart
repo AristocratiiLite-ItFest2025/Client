@@ -24,7 +24,7 @@ class BottomNavBar extends ConsumerWidget {
             onPressed: () => navigationManager.navigateTo(AppScreen.search),
             color: currentScreen == AppScreen.search
                 ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                : Theme.of(context).colorScheme.secondaryContainer,
           ),
           // Center button: Map screen.
           IconButton(
@@ -32,15 +32,15 @@ class BottomNavBar extends ConsumerWidget {
             onPressed: () => navigationManager.navigateTo(AppScreen.map),
             color: currentScreen == AppScreen.map
                 ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                : Theme.of(context).colorScheme.secondaryContainer,
           ),
           // Right button: NGO Chat screen.
           IconButton(
             icon: const Icon(Icons.chat),
             onPressed: () => navigationManager.navigateTo(AppScreen.chatList),
-            color: currentScreen == AppScreen.chat
+            color: currentScreen == AppScreen.chatList
                 ? Theme.of(context).colorScheme.secondary
-                : Colors.grey,
+                : Theme.of(context).colorScheme.secondaryContainer,
           ),
         ],
       ),

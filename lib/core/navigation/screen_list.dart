@@ -25,7 +25,7 @@ Widget getScreenWidget(AppScreen screen) {
       return const MapScreen();
     case AppScreen.chatList:
       return const ChatListScreen();
-    case AppScreen.chat:
+    case AppScreen.entryList:
       return const EntryListScreen(chatId: 1, currentUserId: 1,);
     case AppScreen.settings:
       return const SettingsScreen();

@@ -4,7 +4,7 @@ enum AppScreen {
   search,
   map,
   chatList,
-  chat,
+  entryList,
   settings,
   profile,
   error,

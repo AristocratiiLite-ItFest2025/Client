@@ -7,41 +7,66 @@ import 'package:help_now_frontend/core/navigation/navigation_manager.dart';
 class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
   const TopAppBar({super.key});
 
+  /// Determines whether to show a back arrow for the given screen.
+  bool _shouldShowBackButton(AppScreen screen) {
+    return screen == AppScreen.entryList ||
+        screen == AppScreen.settings ||
+        screen == AppScreen.profile ||
+        screen == AppScreen.error;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScreen = ref.watch(navigationManagerProvider);
+    final bool showBackButton = _shouldShowBackButton(currentScreen);
 
     return AppBar(
       title: Text(_getScreenTitle(currentScreen)),
       centerTitle: true,
       elevation: 4.0,
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 16.0), // Adjusting padding for the left icon
+      // Conditionally render the leading widget.
+      leading: showBackButton
+          ? IconButton(
+        icon: const Icon(Icons.arrow_back),
+        onPressed: () {
+          // Update the navigation state to go back (e.g. to ChatList)
+          ref
+              .read(navigationManagerProvider.notifier)
+              .navigateTo(AppScreen.chatList);
+        },
+      )
+          : Padding(
+        padding: const EdgeInsets.only(left: 16.0),
         child: IconButton(
-          icon: const Icon(Icons.account_circle), // Account icon
+          icon: const Icon(Icons.account_circle),
           onPressed: () {
-            // Navigate to the account management page
-            ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.profile);
+            ref
+                .read(navigationManagerProvider.notifier)
+                .navigateTo(AppScreen.profile);
           },
-          iconSize: 28.0, // Adjusting icon size
+          iconSize: 28.0,
           color: currentScreen == AppScreen.profile
               ? Theme.of(context).colorScheme.secondary
-              : Colors.grey, // Adjusting color based on screen
+              : Colors.grey,
         ),
       ),
-      actions: [
+      // Remove the actions for the back arrow screens.
+      actions: showBackButton
+          ? null
+          : [
         Padding(
-          padding: const EdgeInsets.only(right: 16.0), // Adjusting padding for the right icon
+          padding: const EdgeInsets.only(right: 16.0),
           child: IconButton(
-            icon: const Icon(Icons.settings), // Gear icon
+            icon: const Icon(Icons.settings),
             onPressed: () {
-              // Navigate to the settings page using NavigationManager
-              ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.settings);
+              ref
+                  .read(navigationManagerProvider.notifier)
+                  .navigateTo(AppScreen.settings);
             },
-            iconSize: 28.0, // Adjusting icon size
+            iconSize: 28.0,
             color: currentScreen == AppScreen.settings
                 ? Theme.of(context).colorScheme.secondary
-                : Colors.grey, // Adjusting color based on screen
+                : Colors.grey,
           ),
         ),
       ],
@@ -62,7 +87,7 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
         return "Settings";
       case AppScreen.profile:
         return "Profile";
-      case AppScreen.chat:
+      case AppScreen.entryList:
         return "Chat";
       case AppScreen.error:
         return "Error";
