@@ -25,7 +25,7 @@ class EntryService {
   }
 
   Future<List<EntryModel>> fetchEntries(int chatId) async {
-    final url = Uri.parse('$baseUrl/chats/$chatId/entries');
+    final url = Uri.parse('$baseUrl/entries/$chatId');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
