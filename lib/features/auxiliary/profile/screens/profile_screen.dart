@@ -9,6 +9,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final asyncPrefs = ref.watch(preferencesServiceProvider);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: const TopAppBar(),
@@ -18,12 +19,24 @@ class ProfileScreen extends ConsumerWidget {
           return Center(
             child: Text(
               "Profile Screen - Welcome, $username",
-              style: const TextStyle(fontSize: 20),
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineSmall
+                  ?.copyWith(color: colorScheme.onSurface),
             ),
           );
         },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stack) => Center(child: Text("Error: $error")),
+        loading: () => Center(
+          child: CircularProgressIndicator(
+            color: colorScheme.primary, // Adaptive loading color
+          ),
+        ),
+        error: (error, stack) => Center(
+          child: Text(
+            "Error: $error",
+            style: TextStyle(color: colorScheme.error, fontSize: 16),
+          ),
+        ),
       ),
     );
   }

@@ -14,6 +14,9 @@ class EventCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return GestureDetector(
       onTap: () {
         // On tap, open the larger event detail dialog.
@@ -23,25 +26,25 @@ class EventCard extends StatelessWidget {
         );
       },
       child: Card(
+        color: colorScheme.surfaceContainerHighest, // Adaptive background color
         elevation: 4,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
         clipBehavior: Clip.antiAlias,
         child: SizedBox(
-          width: 220, // adjust width as needed
+          width: 220, // Adjust width as needed
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              // Image section
-              // Image section
+              // Image section with gradient fallback
               Container(
                 height: 80,
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                   gradient: event.image == "Null"
-                      ? const LinearGradient(
-                    colors: [Colors.blue, Colors.green],
+                      ? LinearGradient(
+                    colors: [colorScheme.primary, colorScheme.secondary],
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                   )
@@ -59,41 +62,41 @@ class EventCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Row with author id and start/end time on two separate lines
+                    // Row with author ID and event time
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Author: ${event.authorId}",
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
                         ),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
                               _formatTime(event.startTime),
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.primary),
                             ),
                             Text(
                               _formatTime(event.endTime),
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.secondary),
                             ),
                           ],
                         ),
                       ],
                     ),
                     const SizedBox(height: 4),
-                    // Row with number of attendees and recurring duration
+                    // Row with attendees and recurring duration
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Attendees: ${event.attendees}",
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant),
                         ),
                         Text(
                           "Recurring: ${event.recurringDuration}",
-                          style: Theme.of(context).textTheme.bodySmall,
+                          style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.tertiary),
                         ),
                       ],
                     ),

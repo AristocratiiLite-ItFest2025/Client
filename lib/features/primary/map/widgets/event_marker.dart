@@ -9,6 +9,8 @@ class EventMarker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return GestureDetector(
       onTap: () {
         final RenderBox renderBox = context.findRenderObject() as RenderBox;
@@ -48,7 +50,7 @@ class EventMarker extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: Theme.of(context).colorScheme.primary,
+          color: colorScheme.primary,
         ),
         child: ClipOval(
           child: Image.network(
@@ -57,7 +59,7 @@ class EventMarker extends StatelessWidget {
             // Fallback in case the image fails to load
             errorBuilder: (context, error, stackTrace) => Icon(
               Icons.event,
-              color: Theme.of(context).colorScheme.onPrimary,
+              color: colorScheme.onPrimary,
               size: 30,
             ),
           ),

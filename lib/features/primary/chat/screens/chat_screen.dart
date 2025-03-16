@@ -15,7 +15,7 @@ class ChatScreen extends ConsumerWidget {
     final chatMessages = ref.watch(chatProvider.notifier).getChatMessages(chatId);
 
     return Scaffold(
-      appBar: TopAppBar(),
+      appBar: const TopAppBar(),
       body: Column(
         children: [
           Expanded(
@@ -32,13 +32,17 @@ class ChatScreen extends ConsumerWidget {
                     margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 10),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
-                      color: message.isMine ? Colors.blueAccent : Colors.grey[300],
+                      color: message.isMine
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Text(
                       message.message,
                       style: TextStyle(
-                        color: message.isMine ? Colors.white : Colors.black,
+                        color: message.isMine
+                            ? Theme.of(context).colorScheme.onPrimary
+                            : Theme.of(context).colorScheme.onSurface,
                       ),
                     ),
                   ),
@@ -67,6 +71,9 @@ class _ChatInputField extends StatelessWidget {
             child: TextField(
               decoration: InputDecoration(
                 hintText: 'Type a message...',
+                hintStyle: TextStyle(
+                  color: Theme.of(context).colorScheme.onSurface.withAlpha(153),
+                ),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -74,7 +81,7 @@ class _ChatInputField extends StatelessWidget {
             ),
           ),
           IconButton(
-            icon: const Icon(Icons.send, color: Colors.blueAccent),
+            icon: Icon(Icons.send, color: Theme.of(context).colorScheme.primary),
             onPressed: () {
               // Implement send message logic here.
             },

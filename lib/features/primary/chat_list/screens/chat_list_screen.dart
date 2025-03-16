@@ -15,14 +15,18 @@ class ChatListScreen extends ConsumerWidget {
     final chatList = ref.watch(chatListProvider);
 
     return Scaffold(
-      appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
+      appBar: kIsWeb
+          ? const WebTopBar() // Web-specific top bar
+          : const TopAppBar(), // Mobile-specific top bar
       body: ListView.builder(
         itemCount: chatList.length,
         itemBuilder: (context, index) {
-          return ChatCard(chat: chatList[index]);
+          return ChatCard(chat: chatList[index]); // Use ChatCard widget for displaying each chat
         },
       ),
-      bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
+      bottomNavigationBar: kIsWeb
+          ? null // No bottom nav bar for web
+          : BottomNavBar(), // Bottom nav bar for mobile
     );
   }
 }

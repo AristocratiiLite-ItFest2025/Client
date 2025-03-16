@@ -15,7 +15,9 @@ class EventListScreen extends ConsumerWidget {
     final events = ref.watch(eventViewModelProvider);
 
     return Scaffold(
-      appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
+      appBar: kIsWeb
+          ? const WebTopBar() // Use WebTopBar for web
+          : const TopAppBar(), // Use TopAppBar for mobile
       body: ListView.builder(
         padding: const EdgeInsets.all(16),
         itemCount: events.length,
@@ -23,11 +25,13 @@ class EventListScreen extends ConsumerWidget {
           final event = events[index];
           return Padding(
             padding: const EdgeInsets.only(bottom: 16),
-            child: EventCard(event: event),
+            child: EventCard(event: event), // EventCard widget to display events
           );
         },
       ),
-      bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
+      bottomNavigationBar: kIsWeb
+          ? null // Hide BottomNavBar for web
+          : const BottomNavBar(), // Show BottomNavBar for mobile
     );
   }
 }

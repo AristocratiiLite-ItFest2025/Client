@@ -11,9 +11,11 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final currentScreen = ref.watch(navigationManagerProvider);
+    final colorScheme = Theme.of(context).colorScheme;
+
     return AppBar(
       automaticallyImplyLeading: false,
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: colorScheme.surface,
       elevation: 4.0,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -21,11 +23,11 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
           // Left: Logo and App Name
           Row(
             children: [
-              Icon(Icons.web, size: 32, color: Theme.of(context).primaryColor),
+              Icon(Icons.web, size: 32, color: colorScheme.primary),
               const SizedBox(width: 8),
               Text(
                 AppConstants.appName,
-                style: Theme.of(context).textTheme.titleLarge,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(color: colorScheme.onSurface),
               ),
             ],
           ),
@@ -60,16 +62,16 @@ class WebTopBar extends ConsumerWidget implements PreferredSizeWidget {
                 onPressed: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.profile),
                 iconSize: 28.0,
                 color: currentScreen == AppScreen.profile
-                    ? Theme.of(context).colorScheme.secondary
-                    : Colors.grey,
+                    ? colorScheme.secondary
+                    : colorScheme.onSurface.withAlpha(153),
               ),
               IconButton(
                 icon: const Icon(Icons.settings),
                 onPressed: () => ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.settings),
                 iconSize: 28.0,
                 color: currentScreen == AppScreen.settings
-                    ? Theme.of(context).colorScheme.secondary
-                    : Colors.grey,
+                    ? colorScheme.secondary
+                    : colorScheme.onSurface.withAlpha(153),
               ),
             ],
           ),
@@ -98,7 +100,9 @@ class _NavLink extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? Theme.of(context).colorScheme.secondary : Colors.grey;
+    final colorScheme = Theme.of(context).colorScheme;
+    final color = isSelected ? colorScheme.secondary : colorScheme.onSurface.withAlpha(153);
+
     return TextButton.icon(
       onPressed: onTap,
       icon: Icon(icon, color: color),
@@ -109,4 +113,3 @@ class _NavLink extends StatelessWidget {
     );
   }
 }
-

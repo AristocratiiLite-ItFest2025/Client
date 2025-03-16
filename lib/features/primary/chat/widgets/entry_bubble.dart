@@ -8,8 +8,8 @@ class EntryBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Assuming EntryModel has a bool 'isMine' to indicate if the message was sent by the current user.
     final bool isMine = entry.isMine;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Align(
       alignment: isMine ? Alignment.centerRight : Alignment.centerLeft,
@@ -20,7 +20,7 @@ class EntryBubble extends StatelessWidget {
           maxWidth: MediaQuery.of(context).size.width * 0.75,
         ),
         decoration: BoxDecoration(
-          color: isMine ? Theme.of(context).primaryColor : Colors.grey[300],
+          color: isMine ? colorScheme.primary : colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
@@ -31,7 +31,7 @@ class EntryBubble extends StatelessWidget {
         child: Text(
           entry.message,
           style: TextStyle(
-            color: isMine ? Colors.white : Colors.black87,
+            color: isMine ? colorScheme.onPrimary : colorScheme.onSurfaceVariant,
             fontSize: 16,
           ),
         ),

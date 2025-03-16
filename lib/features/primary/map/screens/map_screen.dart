@@ -18,12 +18,20 @@ class MapScreen extends ConsumerWidget {
     final mapState = ref.watch(mapViewModelProvider);
     final events = mapState.events;
 
+    // MapController to control the map.
+    final MapController mapController = MapController();
+
+    // Set initial center and zoom after the widget is built.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      mapController.move(mapState.center, 13.0); // Adjust zoom level (13.0) if needed
+    });
+
     return Scaffold(
       appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
       body: FlutterMap(
+        mapController: mapController,
         options: MapOptions(
-          initialCenter: mapState.center,
-          initialZoom: mapState.zoom,
+          // No center or zoom defined here
         ),
         children: [
           TileLayer(
@@ -56,7 +64,7 @@ class MapScreen extends ConsumerWidget {
                 child: EventMarker(event: event),
               );
             }).toList(),
-          )
+          ),
         ],
       ),
       bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),

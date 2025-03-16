@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../../core/models/event_model.dart';
 
 class EventDetailDialog extends StatelessWidget {
@@ -14,70 +13,83 @@ class EventDetailDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
     return AlertDialog(
+      backgroundColor: colorScheme.surfaceContainerHighest, // Material3 adaptive background
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       content: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Event image
-            Container(
-              height: 150,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(event.image),
-                  fit: BoxFit.cover,
+            // Event image with rounded corners
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                height: 150,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(event.image),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 12),
+
             // Author and Time on separate lines
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Author: ${event.authorId}",
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       _formatTime(event.startTime),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.primary),
                     ),
                     Text(
                       _formatTime(event.endTime),
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.secondary),
                     ),
                   ],
                 ),
               ],
             ),
             const SizedBox(height: 8),
+
+            // Attendees and Recurring Info
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Attendees: ${event.attendees}",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.onSurfaceVariant),
                 ),
                 Text(
                   "Recurring: ${event.recurringDuration}",
-                  style: Theme.of(context).textTheme.bodySmall,
+                  style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.tertiary),
                 ),
               ],
             ),
             const SizedBox(height: 8),
-            // Description
+
+            // Event Description
             Text(
               event.description,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: theme.textTheme.bodyMedium?.copyWith(color: colorScheme.onSurface),
             ),
-            const SizedBox(height: 8),
-            // Contact information
+            const SizedBox(height: 12),
+
+            // Contact Information
             Text(
               "Contact: ${event.phoneContact} | ${event.emailForContact}",
-              style: Theme.of(context).textTheme.bodySmall,
+              style: theme.textTheme.bodySmall?.copyWith(color: colorScheme.primary),
             ),
           ],
         ),
@@ -87,12 +99,14 @@ class EventDetailDialog extends StatelessWidget {
           onPressed: () {
             // Implement join action logic here
           },
+          style: TextButton.styleFrom(foregroundColor: colorScheme.primary),
           child: const Text("Join"),
         ),
         TextButton(
           onPressed: () {
             Navigator.of(context).pop();
           },
+          style: TextButton.styleFrom(foregroundColor: colorScheme.error),
           child: const Text("Close"),
         ),
       ],
