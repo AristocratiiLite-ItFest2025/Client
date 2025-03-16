@@ -24,16 +24,16 @@ class EventDetailDialog extends StatelessWidget {
               height: 150,
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                gradient: event.image == "Null"
+                gradient: event.image == null
                     ? const LinearGradient(
                   colors: [Colors.blue, Colors.green],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 )
                     : null,
-                image: event.image != "Null"
+                image: event.image != null
                     ? DecorationImage(
-                  image: NetworkImage(event.image),
+                  image: NetworkImage(event.image!),
                   fit: BoxFit.cover,
                 )
                       : null,

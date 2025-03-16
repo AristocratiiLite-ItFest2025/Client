@@ -11,7 +11,6 @@ class EntryBubble extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Retrieve the current user's id from preferences.
     final prefsAsync = ref.watch(preferencesServiceProvider);
 
     return prefsAsync.when(

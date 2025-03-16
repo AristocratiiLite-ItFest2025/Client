@@ -44,9 +44,9 @@ class EventCard extends StatelessWidget {
                     end: Alignment.bottomRight,
                   )
                       : null,
-                  image: event.image != "Null"
+                  image: event.image != null
                       ? DecorationImage(
-                    image: NetworkImage(event.image),
+                    image: NetworkImage(event.image!),
                     fit: BoxFit.cover,
                   )
                       : null,
