@@ -1,19 +1,13 @@
+import '../authetication_service.dart';
+
 class AuthRepository {
-  Future<void> login(String email, String password) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 2));
-    if (email.isEmpty || password.isEmpty) {
-      throw Exception('Email and password cannot be empty.');
-    }
-    // TODO: Implement actual authentication logic.
+  final AuthenticationService _authService = AuthenticationService();
+
+  Future<void> register(String username, String email, String password) async {
+    await _authService.register(username, email, password);
   }
 
-  Future<void> register(String email, String password) async {
-    // Simulate network delay
-    await Future.delayed(const Duration(seconds: 1));
-    if (email.isEmpty || password.isEmpty) {
-      throw Exception('Email and password cannot be empty.');
-    }
-    // TODO: Implement actual registration logic.
+  Future<void> login(String username, String password) async {
+    await _authService.login(username, password);
   }
 }
