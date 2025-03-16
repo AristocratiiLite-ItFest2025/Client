@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/models/entry_model.dart';
+import '../../../../core/services/preferences_service.dart';
 
-// ChatViewModel providing a list of chat messages.
 class ChatViewModel extends StateNotifier<List<EntryModel>> {
   ChatViewModel()
       : super([
@@ -104,14 +105,15 @@ class ChatViewModel extends StateNotifier<List<EntryModel>> {
       isMine: true,
       timestamp: DateTime.now().subtract(const Duration(minutes: 12)),
     ),
-  ]);
+  ]) {
+    final userId = PreferencesService().userId;
+    debugPrint("ChatViewModel created, userId: $userId");
+  }
 
   List<EntryModel> getChatMessages(int chatId) {
-    return state
-        .where((msg) => msg.chatId == chatId)
-        .toList();
+    return state.where((msg) => msg.chatId == chatId).toList();
   }
-// Add additional methods to manipulate chat entries if needed.
+// Additional methods to manipulate chat entries can be added here.
 }
 
 // Riverpod provider for the chat messages.
