@@ -12,20 +12,23 @@ class RegisterScreen extends ConsumerStatefulWidget {
 }
 
 class _RegisterScreenState extends ConsumerState<RegisterScreen> {
+  final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
 
   void _onRegister() {
+    final username = _usernameController.text.trim();
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
-    ref.read(registerViewModelProvider.notifier).register(email, password);
+    ref.read(registerViewModelProvider.notifier).register(username, email, password);
   }
 
   void _navigateBack() {
@@ -34,6 +37,19 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Listen for a successful registration.
+    ref.listen<RegisterState>(registerViewModelProvider, (previous, next) {
+      if (next.registrationSuccess && (previous?.registrationSuccess != true)) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Registered successfully!')),
+        );
+        // Delay a moment so the user sees the SnackBar, then navigate to login.
+        Future.delayed(const Duration(seconds: 1), () {
+          ref.read(navigationManagerProvider.notifier).navigateTo(AppScreen.login);
+        });
+      }
+    });
+
     final registerState = ref.watch(registerViewModelProvider);
     return Scaffold(
       appBar: AppBar(
@@ -47,6 +63,11 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            // Username field
+            TextField(
+              controller: _usernameController,
+              decoration: const InputDecoration(labelText: 'Username'),
+            ),
             // Email field
             TextField(
               controller: _emailController,
