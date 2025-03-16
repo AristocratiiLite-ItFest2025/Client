@@ -51,16 +51,35 @@ class EventMarker extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary,
         ),
         child: ClipOval(
-          child: Image.network(
+          child: event.iconImage != null && event.iconImage!.isNotEmpty
+              ? Image.network(
             event.iconImage!,
             fit: BoxFit.cover,
+            loadingBuilder: (context, child, loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Center(
+                child: CircularProgressIndicator(
+                  value: loadingProgress.expectedTotalBytes != null
+                      ? loadingProgress.cumulativeBytesLoaded /
+                      loadingProgress.expectedTotalBytes!
+                      : null,
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+              );
+            },
             errorBuilder: (context, error, stackTrace) => Icon(
               Icons.event,
               color: Theme.of(context).colorScheme.onPrimary,
               size: 30,
             ),
+          )
+              : Icon(
+            Icons.event,
+            color: Theme.of(context).colorScheme.onPrimary,
+            size: 30,
           ),
         ),
+
       ),
     );
   }

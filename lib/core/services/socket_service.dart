@@ -5,7 +5,7 @@ final String baseUrl = 'https://backend-helpnow.city-aura.co';
 
 class SocketService {
   late io.Socket socket;
-  String? userId;
+  int? userId;
 
   SocketService() {
     _initializeUserId();
@@ -24,7 +24,7 @@ class SocketService {
     await prefsService.init();
     final profile = prefsService.profile;
     if (profile != null) {
-      userId = profile.id as String?;
+      userId = profile.id;
     }
   }
 
