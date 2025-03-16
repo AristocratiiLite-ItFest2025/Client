@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 import '../models/entry_model.dart';
@@ -26,10 +27,15 @@ class EntryService {
   Future<List<EntryModel>> fetchEntries(int chatId) async {
     final url = Uri.parse('$baseUrl/chats/$chatId/entries');
     final response = await http.get(url);
+
     if (response.statusCode == 200) {
       final List<dynamic> jsonData = json.decode(response.body);
+      debugPrint("fml");
+      debugPrint(response.body.toString());
       return jsonData.map((json) => EntryModel.fromJson(json)).toList();
     } else {
+      debugPrint("fml");
+      debugPrint(response.body.toString());
       throw Exception('Failed to fetch entries');
     }
   }

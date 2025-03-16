@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:help_now_frontend/core/models/entry_model.dart';
 import 'package:help_now_frontend/core/services/entry_service.dart';
@@ -13,15 +16,15 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
     required EntryService entryService,
     required this.chatId,
     required this.currentUserId,
-  }) : _entryService = entryService,
-        super(const AsyncValue.loading()) {
+  })  : _entryService = entryService,
+        super(const AsyncValue.data([])) {
     _init();
   }
 
   void _init() {
-    fetchEntries();
     _socketService.joinChat(chatId);
     _socketService.listenForMessages(_handleIncomingMessage);
+    fetchEntries();
   }
 
   Future<void> fetchEntries() async {
@@ -37,7 +40,7 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
     try {
       final newEntry = EntryModel(
         text: text,
-        userId: currentUserId, // use the current user id here.
+        userId: currentUserId,
         chatId: chatId,
         timestamp: DateTime.now(),
         id: 0,
@@ -57,10 +60,15 @@ class EntryListViewModel extends StateNotifier<AsyncValue<List<EntryModel>>> {
   }
 
   void _handleIncomingMessage(dynamic data) {
-    final incomingEntry = EntryModel.fromJson(data);
-    state.whenData((entries) {
-      state = AsyncValue.data([incomingEntry, ...entries]);
-    });
+    try {
+      final decodedData = data is String ? json.decode(data) : data;
+      final incomingEntry = EntryModel.fromJson(decodedData);
+      state.whenData((entries) {
+        state = AsyncValue.data([incomingEntry, ...entries]);
+      });
+    } catch (e) {
+      debugPrint("Error parsing incoming socket message: $e");
+    }
   }
 
   @override

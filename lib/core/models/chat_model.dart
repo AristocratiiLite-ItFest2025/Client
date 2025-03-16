@@ -16,23 +16,22 @@ class ChatModel {
   factory ChatModel.fromJson(Map<String, dynamic> json) {
     return ChatModel(
       id: json['id'] as int,
-      title: json['title'] as String,
-      lastMessage: json['lastMessage'] as String?,
-      lastMessageTimestamp: json['lastMessageTimestamp'] != null
-          ? DateTime.parse(json['lastMessageTimestamp'])
-          : null,
-      imageUrl: json['imageUrl'] as String?,
+      title: json['name'] as String, // Using "name" from JSON
+      lastMessage: json['last_message'] as String?, // Using "last_message"
+      lastMessageTimestamp: json.containsKey('last_message_timestamp') && json['last_message_timestamp'] != null
+          ? DateTime.parse(json['last_message_timestamp'])
+          : null, // It might be null if not provided.
+      imageUrl: json['chat_image'] as String?, // Using "chat_image"
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'title': title,
-      'lastMessage': lastMessage,
-      'lastMessageTimestamp':
-      lastMessageTimestamp?.toIso8601String(),
-      'imageUrl': imageUrl,
+      'name': title, // matching the API key
+      'last_message': lastMessage,
+      'last_message_timestamp': lastMessageTimestamp?.toIso8601String(),
+      'chat_image': imageUrl,
     };
   }
 }

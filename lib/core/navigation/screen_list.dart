@@ -26,7 +26,7 @@ Widget getScreenWidget(AppScreen screen) {
     case AppScreen.chatList:
       return const ChatListScreen();
     case AppScreen.chat:
-      return const EntryListScreen(chatId: 1);
+      return const EntryListScreen(chatId: 1, currentUserId: 1,);
     case AppScreen.settings:
       return const SettingsScreen();
     case AppScreen.profile:

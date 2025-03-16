@@ -24,7 +24,7 @@ class ChatCard extends ConsumerWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EntryListScreen(chatId: chat.id),
+            builder: (context) => EntryListScreen(chatId: chat.id, currentUserId: chat.id,),
           ),
         );
       },
@@ -35,7 +35,7 @@ class ChatCard extends ConsumerWidget {
           child: Row(
             children: [
               // Left side: display an image if available; otherwise, show an icon.
-              chatData.imageUrl != null && chatData.imageUrl!.isNotEmpty
+              /*chatData.imageUrl != null && chatData.imageUrl!.isNotEmpty
                   ? CircleAvatar(
                 backgroundImage: NetworkImage(chatData.imageUrl!),
                 radius: 24,
@@ -43,7 +43,10 @@ class ChatCard extends ConsumerWidget {
                   : const CircleAvatar(
                 radius: 24,
                 child: Icon(Icons.chat_bubble),
-              ),
+              ),*///Todo Change to before, after raul fixes backend
+              CircleAvatar(
+                radius: 24,
+                child: Icon(Icons.chat_bubble)),
               const SizedBox(width: 12),
               // Right side: a column with the title and a row with the last message and its timestamp.
               Expanded(
@@ -65,7 +68,9 @@ class ChatCard extends ConsumerWidget {
                           ),
                         ),
                         Text(
-                          _formatTimestamp(chatData.lastMessageTimestamp!),
+                          chatData.lastMessageTimestamp != null
+                              ? _formatTimestamp(chatData.lastMessageTimestamp!)
+                              : '',
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],

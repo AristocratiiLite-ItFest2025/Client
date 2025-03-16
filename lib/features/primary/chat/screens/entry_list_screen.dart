@@ -8,8 +8,13 @@ import '../widgets/entry_bubble.dart';
 
 class EntryListScreen extends ConsumerWidget {
   final int chatId;
+  final int currentUserId;
 
-  const EntryListScreen({super.key, required this.chatId});
+  const EntryListScreen({
+    super.key,
+    required this.chatId,
+    required this.currentUserId,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,18 +23,16 @@ class EntryListScreen extends ConsumerWidget {
 
     return prefsAsync.when(
       data: (prefs) {
-        // current user id is available here if needed.
-        final chatMessagesAsync = ref.watch(entryListProvider(chatId));
+        final entryListAsync = ref.watch(entryListProvider(chatId));
 
         return Scaffold(
           appBar: TopAppBar(),
           body: Column(
             children: [
               Expanded(
-                child: chatMessagesAsync.when(
+                child: entryListAsync.when(
                   data: (chatMessages) {
                     if (chatMessages.isEmpty) {
-                      // Display a placeholder if there are no messages.
                       return const Center(
                         child: Text(
                           'No messages yet',
@@ -47,10 +50,8 @@ class EntryListScreen extends ConsumerWidget {
                       },
                     );
                   },
-                  loading: () =>
-                  const Center(child: CircularProgressIndicator()),
-                  error: (error, stack) =>
-                      Center(child: Text('Error: $error')),
+                  loading: () => const Center(child: CircularProgressIndicator()),
+                  error: (error, stack) => Center(child: Text('Error: $error')),
                 ),
               ),
               _ChatInputField(
@@ -74,11 +75,11 @@ class EntryListScreen extends ConsumerWidget {
 class _ChatInputField extends StatelessWidget {
   final VoidCallback onSend;
 
-  const _ChatInputField({Key? key, required this.onSend}) : super(key: key);
+  const _ChatInputField({required this.onSend});
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _controller = TextEditingController();
+    final TextEditingController controller = TextEditingController();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
@@ -86,7 +87,7 @@ class _ChatInputField extends StatelessWidget {
         children: [
           Expanded(
             child: TextField(
-              controller: _controller,
+              controller: controller,
               decoration: InputDecoration(
                 hintText: 'Type a message...',
                 border: OutlineInputBorder(
