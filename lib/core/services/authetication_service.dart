@@ -20,8 +20,15 @@ class AuthenticationService {
       throw Exception('Login failed: ${response.body}');
     }
 
-    // Store username locally upon successful login.
-    await PreferencesService().setUsername(username);
+    // Decode the JSON response.
+    final responseData = jsonDecode(response.body);
+    // Extract the user id and username from the response.
+    final int userId = responseData['id'];
+    final String usernameFromResponse = responseData['username'];
+
+    // Store both user id and username locally.
+    await PreferencesService().setUserId(userId);
+    await PreferencesService().setUsername(usernameFromResponse);
   }
 
   Future<void> register(String username, String email, String password) async {
@@ -40,5 +47,15 @@ class AuthenticationService {
     if (response.statusCode != 200) {
       throw Exception('Registration failed: ${response.body}');
     }
+
+    // Decode the JSON response.
+    final responseData = jsonDecode(response.body);
+    // Extract the user id and username from the response.
+    final int userId = responseData['id'];
+    final String usernameFromResponse = responseData['username'];
+
+    // Optionally store both user id and username locally.
+    await PreferencesService().setUserId(userId);
+    await PreferencesService().setUsername(usernameFromResponse);
   }
 }

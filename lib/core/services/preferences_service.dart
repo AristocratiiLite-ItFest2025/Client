@@ -13,13 +13,22 @@ class PreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
+  // Getter and setter for username.
   String? get username => _prefs?.getString('username');
-
   Future<bool> setUsername(String username) async {
     if (_prefs == null) {
       await init();
     }
     return _prefs!.setString('username', username);
+  }
+
+  // Getter and setter for user id.
+  int? get userId => _prefs?.getInt('user_id');
+  Future<bool> setUserId(int id) async {
+    if (_prefs == null) {
+      await init();
+    }
+    return _prefs!.setInt('user_id', id);
   }
 }
 
