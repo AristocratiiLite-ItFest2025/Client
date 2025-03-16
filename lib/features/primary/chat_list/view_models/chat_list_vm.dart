@@ -27,6 +27,6 @@ class ChatListViewModel extends StateNotifier<AsyncValue<List<ChatModel>>> {
 
 final chatListProvider = StateNotifierProvider<ChatListViewModel, AsyncValue<List<ChatModel>>>((ref) {
   final chatService = ref.read(chatServiceProvider);
-  final userId = PreferencesService().userId; // Assumes you already have user id stored.
+  final userId = PreferencesService().profile?.id;
   return ChatListViewModel(chatService: chatService, userId: userId!);
 });

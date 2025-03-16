@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import '../models/profile_model.dart';
 
 class PreferencesService {
@@ -15,7 +14,6 @@ class PreferencesService {
     _prefs = await SharedPreferences.getInstance();
   }
 
-  // Existing getters/setters...
   String? get username => _prefs?.getString('username');
   Future<bool> setUsername(String username) async {
     if (_prefs == null) await init();
@@ -28,6 +26,7 @@ class PreferencesService {
     return _prefs!.setInt('user_id', id);
   }
 
+  // New methods to save and retrieve the complete profile.
   Future<bool> setProfile(ProfileModel profile) async {
     if (_prefs == null) await init();
     final jsonString = jsonEncode(profile.toJson());
@@ -41,7 +40,6 @@ class PreferencesService {
   }
 }
 
-// Riverpod provider for PreferencesService.
 final preferencesServiceProvider = FutureProvider<PreferencesService>((ref) async {
   final service = PreferencesService();
   await service.init();
