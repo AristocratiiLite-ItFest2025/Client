@@ -16,16 +16,21 @@ class EventListScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: events.length,
-        itemBuilder: (context, index) {
-          final event = events[index];
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 16),
-            child: EventCard(event: event),
-          );
-        },
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16),
+            itemCount: events.length,
+            itemBuilder: (context, index) {
+              final event = events[index];
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: EventCard(event: event),
+              );
+            },
+          ),
+        ),
       ),
       bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
     );

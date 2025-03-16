@@ -17,13 +17,23 @@ class ChatListScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: kIsWeb ? const WebTopBar() : const TopAppBar(),
-      body: chatListAsync.when(
-        data: (chats) => ListView.builder(
-          itemCount: chats.length,
-          itemBuilder: (context, index) => ChatCard(chat: chats[index], userid: chatListVM.userId,),
+      body: Center(
+        child: Container(
+          constraints: const BoxConstraints(maxWidth: 600),
+          child: chatListAsync.when(
+            data: (chats) => ListView.builder(
+              itemCount: chats.length,
+              itemBuilder: (context, index) => ChatCard(
+                chat: chats[index],
+                userid: chatListVM.userId,
+              ),
+            ),
+            loading: () =>
+            const Center(child: CircularProgressIndicator()),
+            error: (error, stackTrace) =>
+                Center(child: Text('Error: $error')),
+          ),
         ),
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
       bottomNavigationBar: kIsWeb ? null : const BottomNavBar(),
     );
