@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/models/chat_model.dart';
-import '../../chat/screens/chat_screen.dart';
-import '../view_models/chat_list_vm.dart';
+import '../../chat/screens/entry_list_screen.dart';
 
 class ChatCard extends ConsumerWidget {
   final ChatModel chat;
-  const ChatCard({super.key, required this.chat});
+  ChatCard({super.key, required this.chat});
+
+  final chatCardProvider = Provider.family<ChatModel, ChatModel>(
+        (ref, chat) {
+      return chat;
+    },
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -15,11 +20,11 @@ class ChatCard extends ConsumerWidget {
 
     return InkWell(
       onTap: () {
-        // Navigate to the ChatScreen passing the selected chat's id.
+        // Navigate to the ChatScreen, passing the selected chat's id.
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatScreen(chatId: chat.id),
+            builder: (context) => EntryListScreen(chatId: chat.id),
           ),
         );
       },
@@ -40,29 +45,27 @@ class ChatCard extends ConsumerWidget {
                 child: Icon(Icons.chat_bubble),
               ),
               const SizedBox(width: 12),
-              // Right side: a column containing the title and a row with the last message and its timestamp.
+              // Right side: a column with the title and a row with the last message and its timestamp.
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Title of the chat.
                     Text(
                       chatData.title,
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     const SizedBox(height: 8),
-                    // Row with the last message and timestamp.
                     Row(
                       children: [
                         Expanded(
                           child: Text(
-                            chatData.lastMessage,
+                            chatData.lastMessage!,
                             style: Theme.of(context).textTheme.bodyMedium,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                         Text(
-                          _formatTimestamp(chatData.lastMessageTimestamp),
+                          _formatTimestamp(chatData.lastMessageTimestamp!),
                           style: Theme.of(context).textTheme.bodySmall,
                         ),
                       ],
@@ -77,7 +80,7 @@ class ChatCard extends ConsumerWidget {
     );
   }
 
-  // Helper method to format the timestamp (e.g., as HH:mm).
+  // Helper method to format the timestamp (e.g., HH:mm).
   String _formatTimestamp(DateTime timestamp) {
     final hours = timestamp.hour.toString().padLeft(2, '0');
     final minutes = timestamp.minute.toString().padLeft(2, '0');

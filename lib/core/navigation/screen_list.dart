@@ -8,7 +8,7 @@ import '../../features/auxiliary/settings/screens/settings_screen.dart';
 import '../../features/primary/chat_list/screens/chat_list_screen.dart';
 import '../../features/primary/event_list/screen/event_list_screen.dart';
 import '../../features/primary/map/screens/map_screen.dart';
-import '../../features/primary/chat/screens/chat_screen.dart';
+import '../../features/primary/chat/screens/entry_list_screen.dart';
 
 import '../enums/app_screen.dart';
 
@@ -26,7 +26,7 @@ Widget getScreenWidget(AppScreen screen) {
     case AppScreen.chatList:
       return const ChatListScreen();
     case AppScreen.chat:
-      return const ChatScreen(chatId: 1);
+      return const EntryListScreen(chatId: 1);
     case AppScreen.settings:
       return const SettingsScreen();
     case AppScreen.profile:
