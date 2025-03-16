@@ -38,10 +38,11 @@ class BottomNavBar extends ConsumerWidget {
           // Right button: NGO Chat screen.
           IconButton(
             icon: const Icon(Icons.chat),
-            onPressed: () => navigationManager.navigateTo(AppScreen.ngoChat),
-            color: currentScreen == AppScreen.ngoChat
+            onPressed: () => navigationManager.navigateTo(AppScreen.chatList),
+            color: currentScreen == AppScreen.chatList
                 ? theme.secondary
                 : theme.onPrimaryContainer.withAlpha(153),
+
           ),
         ],
       ),

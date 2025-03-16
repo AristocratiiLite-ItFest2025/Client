@@ -68,6 +68,8 @@ class TopAppBar extends ConsumerWidget implements PreferredSizeWidget {
         return "Settings";
       case AppScreen.profile:
         return "Profile";
+      case AppScreen.chat:
+        return "Chat";
       case AppScreen.error:
         return "Error";
       default:
